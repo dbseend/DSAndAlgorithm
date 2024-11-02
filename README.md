@@ -1,2 +1,2 @@
 # DSAndAlgorithm
-Study for Data Structure And Algorithm
+Study Data Structure And Algorithm
