@@ -12,7 +12,39 @@ Node *SLL_CreateNode(ElementType NewData) {
 }
 
 // 노드 소멸 연산
+// List를 지우면 Node들도 함께 지워지는 것일까?
 void SLL_DestroyNode(Node *Node) { free(Node); }
+
+void SLL_DestroyAllNodes(Node **List) {
+  Node *current = *List;
+  Node *next = NULL;
+
+  while (current != NULL) {
+    SLL_RemoveNode(List, current);
+    next = current->NextNode;
+    free(current);
+    current = next;
+  }
+
+    *List = NULL; //왜 free를 사용하지 않지?
+}
+
+// 노드 삭제 연산
+void SLL_RemoveNode(Node **Head, Node *Remove) {
+
+  if ((*Head) == Remove) {
+    *Head = Remove->NextNode;
+  } else {
+    Node *Current = *Head;
+    while (Current != NULL && Current->NextNode != Remove) {
+      Current = Current->NextNode;
+    }
+
+    if (Current != NULL) {
+      Current->NextNode = Remove->NextNode;
+    }
+  }
+}
 
 // 노드 추가 연산
 void SLL_AppendNode(Node **Head, Node *NewNode) {
@@ -39,23 +71,6 @@ Node *SLL_GetNodeAt(Node *Head, int Location) {
   return Current;
 }
 
-// 노드 삭제 연산
-void SLL_RemoveNode(Node **Head, Node *Remove) {
-
-  if ((*Head) == Remove) {
-    *Head = Remove->NextNode;
-  } else {
-    Node *Current = *Head;
-    while (Current != NULL && Current->NextNode != Remove) {
-      Current = Current->NextNode;
-    }
-
-    if (Current != NULL) {
-      Current->NextNode = Remove->NextNode;
-    }
-  }
-}
-
 // 노드 삽입 연산 - 특정 노드 뒤에 삽입
 void SLL_InsertAfter(Node *Current, Node *NewNode) {
   NewNode->NextNode = Current->NextNode;
@@ -65,20 +80,20 @@ void SLL_InsertAfter(Node *Current, Node *NewNode) {
 // 노드 삽입 연산 - 특정 노드 앞에 삽입
 // tail == NULL vs *Head == NULL
 // tail == Current vs *Head = Current
-void SLL_InsertBeforeFixed(Node **Head, Node *Current, Node *NewHead) {
+void SLL_InsertBefore(Node **Head, Node *Current, Node *NewHead) {
   if (Head == NULL) {
     (*Head) = NewHead;
   } else {
     Node *tail = *Head;
 
-    if(tail == NULL){
+    if (tail == NULL) {
       printf("first\n");
     }
 
     while (tail != NULL && tail->NextNode != Current) {
       tail = tail->NextNode;
     }
-    
+
     if (tail != NULL) {
       tail->NextNode = NewHead;
       NewHead->NextNode = Current;
@@ -87,23 +102,6 @@ void SLL_InsertBeforeFixed(Node **Head, Node *Current, Node *NewHead) {
       *Head = NewHead;
     } else {
       printf("Can Not Find Current Node\n");
-    }
-  }
-}
-
-void SLL_InsertBefore(Node **Head, Node *Current, Node *NewHead) {
-  if (Head == NULL) {
-    (*Head) = NewHead;
-  } else {
-    Node *tail = *Head;
-
-    while (tail != NULL) {
-      if (tail->NextNode == Current) {
-        tail->NextNode = NewHead;
-        NewHead->NextNode = Current;
-      }
-
-      tail = tail->NextNode;
     }
   }
 }

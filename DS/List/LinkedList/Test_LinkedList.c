@@ -15,7 +15,7 @@ int main() {
 
   Current = SLL_GetNodeAt(List, 0);
   NewNode = SLL_CreateNode(1201);
-  SLL_InsertBeforeFixed(&List, Current, NewNode);
+  SLL_InsertBefore(&List, Current, NewNode);
 
   // NewNode = SLL_CreateNode(-1);
   // SLL_InsertNewHead(&List, NewNode);
@@ -43,15 +43,23 @@ int main() {
   }
 
   printf("\nDestorying List...\n");
+  SLL_DestroyAllNodes(&List);
 
-  for (i = 0; i < Count; i++) {
-    Current = SLL_GetNodeAt(List, 0);
-
-    if (Current != NULL) {
-      SLL_RemoveNode(&List, Current);
-      SLL_DestroyNode(Current);
-    }
+  Count = SLL_GetNodeCount(List);
+  printf("Count: %d\n", Count);
+    for (i = 0; i < Count; i++) {
+    Current = SLL_GetNodeAt(List, i);
+    printf("List[%d] : %d\n", i, Current->Data);
   }
+
+  //   for (i = 0; i < Count; i++) {
+  //     Current = SLL_GetNodeAt(List, 0);
+
+  //     if (Current != NULL) {
+  //       SLL_RemoveNode(&List, Current);
+  //       SLL_DestroyNode(Current);
+  //     }
+  //   }
 
   return 0;
 }
