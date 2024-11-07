@@ -34,8 +34,30 @@ void DLL_AppendNode(Node **Head, Node *NewNode) {
 
 // 노드 삽입
 void DLL_InsertAfter(Node *Current, Node *NewNode) {
-  
+  // Current 노드가 마지막 노드인 경우
+  if (Current->nextNode == NULL) {
+    Current->nextNode = NewNode;
+    NewNode->prevNode = Current;
+    NewNode->nextNode = NULL; 
+  } else {
+    // 중간에 삽입하는 경우
+    NewNode->prevNode = Current;
+    NewNode->nextNode = Current->nextNode; 
+    Current->nextNode->prevNode = NewNode; 
+    Current->nextNode = NewNode;
+  }
 }
+
+void DLL_InsertAfterAns(Node *Current, Node *NewNode) {
+  NewNode->nextNode = Current->nextNode;
+  NewNode->prevNode = Current;
+
+  if(Current->nextNode != NULL){
+    Current->nextNode->prevNode = NewNode;
+    Current->nextNode = NewNode;
+  }
+}
+
 
 void DLL_RemoveNode(Node **Head, Node *Remove) {
   Node *Current = *Head;
@@ -57,37 +79,27 @@ void DLL_RemoveNode(Node **Head, Node *Remove) {
   Remove->nextNode = NULL;
 }
 
-void DLL_RemoveNodeFixed(Node **Head, Node *Remove) {
-  Node *Current = *Head;
-  Node *Next = NULL;
-
-  if (*Head == Remove) { // 첫번째 노드를 삭제 할 때
-    Remove->nextNode = NULL;
-    Next->prevNode = NULL;
-  }
-
-  while (Current->nextNode != NULL) {
-
-    Next = Current->nextNode;
-
-    if (Next == Remove) {
-      Node *NextRemove = Remove->nextNode;
-
-      if (NextRemove == NULL) {
-        Remove->prevNode = NULL;
-        Current->nextNode = NULL;
-      } else {
-        Remove->nextNode = NULL;
-        Remove->prevNode = NULL;
-
-        Current->nextNode = NextRemove;
-        NextRemove->prevNode = Current;
-      }
-
-      break;
+void DLL_RemoveNodeAns(Node **Head, Node *Remove) {
+  if(*Head == Remove){
+    *Head = Remove->nextNode;
+    if((*Head) != NULL){
+      (*Head)->prevNode = NULL;
     }
 
-    Current = Current->nextNode;
+    Remove->prevNode = NULL;
+    Remove->nextNode = NULL;
+  } else{
+    Node* Temp = Remove;
+
+    if(Remove->prevNode != NULL){
+      Remove->nextNode->prevNode = Temp->nextNode;
+    }
+    if(Remove->nextNode != NULL){
+      Remove->nextNode->prevNode = Temp->prevNode;
+    }
+
+    Remove->prevNode = NULL;
+    Remove->nextNode = NULL;
   }
 }
 
