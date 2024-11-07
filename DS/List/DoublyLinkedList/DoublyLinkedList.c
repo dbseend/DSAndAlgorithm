@@ -33,7 +33,9 @@ void DLL_AppendNode(Node **Head, Node *NewNode) {
 }
 
 // 노드 삽입
-void DLL_InsertAfter(Node *Current, Node *NewNode) {}
+void DLL_InsertAfter(Node *Current, Node *NewNode) {
+  
+}
 
 void DLL_RemoveNode(Node **Head, Node *Remove) {
   Node *Current = *Head;
@@ -103,4 +105,14 @@ Node *DLL_GetNodeAt(Node *Head, int Location) {
   return Current;
 }
 
-int DLL_GetNodeCount(Node *Head) {}
+int DLL_GetNodeCount(Node *Head) {
+  int count = 0;
+  Node* Current = Head;
+
+  while(Current != NULL){
+    Current = Current->nextNode;
+    count++;
+  }
+
+  return count;
+}
