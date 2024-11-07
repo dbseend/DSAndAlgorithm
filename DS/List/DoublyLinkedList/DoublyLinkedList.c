@@ -33,11 +33,29 @@ void DLL_AppendNode(Node **Head, Node *NewNode) {
 }
 
 // 노드 삽입
-void DLL_InsertAfter(Node *Current, Node *NewNode) {
-    
-}
+void DLL_InsertAfter(Node *Current, Node *NewNode) {}
 
 void DLL_RemoveNode(Node **Head, Node *Remove) {
+  Node *Current = *Head;
+  
+  if (*Head == Remove) { // 삭제하려는 노드가 첫번째 노드인 경우 
+    if((*Head)->nextNode != NULL){
+      (*Head)->nextNode->prevNode = NULL;
+    }
+  } else {
+    if (Remove->nextNode != NULL) { // 삭제하려는 노드 앞,뒤의 노두가 모두 존재하는 경우
+      Remove->prevNode->nextNode = Remove->nextNode;
+      Remove->nextNode->prevNode = Remove->prevNode;
+    } else { // 삭제하려는 노드가 마지막 노드인 경우
+      Remove->prevNode->nextNode = NULL;
+    }
+  }
+
+  Remove->prevNode = NULL;
+  Remove->nextNode = NULL;
+}
+
+void DLL_RemoveNodeFixed(Node **Head, Node *Remove) {
   Node *Current = *Head;
   Node *Next = NULL;
 
