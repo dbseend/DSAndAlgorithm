@@ -47,8 +47,13 @@ int main() {
     Current = DLL_GetNodeAt(List, 0);
 
     if (Current != NULL) {
-      DLL_RemoveNode(&List, Current);
+      //DLL_RemoveNode(&List, Current);
+      DLL_RemoveNodeAns(&List, Current);
       DLL_DestroyNode(Current);
     }
   }
+
+  Count = DLL_GetNodeCount(List);
+  printf("Count: %d\n", Count);
+  DLL_PrintReverse(List);
 }

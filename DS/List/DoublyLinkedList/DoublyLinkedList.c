@@ -49,7 +49,7 @@ void DLL_InsertAfter(Node *Current, Node *NewNode) {
 }
 
 void DLL_InsertAfterAns(Node *Current, Node *NewNode) {
-  NewNode->nextNode = Current->nextNode;
+  NewNode->nextNode = Current->nextNode; // 마지막 노드인 경우는 nextNode가 없을텐데 이렇게 처리를 해도 되나?
   NewNode->prevNode = Current;
 
   if (Current->nextNode != NULL) {
