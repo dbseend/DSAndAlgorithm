@@ -49,7 +49,8 @@ void DLL_InsertAfter(Node *Current, Node *NewNode) {
 }
 
 void DLL_InsertAfterAns(Node *Current, Node *NewNode) {
-  NewNode->nextNode = Current->nextNode; // 마지막 노드인 경우는 nextNode가 없을텐데 이렇게 처리를 해도 되나?
+  NewNode->nextNode = Current->nextNode; // 마지막 노드인 경우는 nextNode가
+                                         // 없을텐데 이렇게 처리를 해도 되나?
   NewNode->prevNode = Current;
 
   if (Current->nextNode != NULL) {
@@ -59,24 +60,17 @@ void DLL_InsertAfterAns(Node *Current, Node *NewNode) {
 }
 
 void DLL_RemoveNode(Node **Head, Node *Remove) {
-  Node *Current = *Head;
-
-  if (*Head == Remove) { // 삭제하려는 노드가 첫번째 노드인 경우
-    if ((*Head)->nextNode != NULL) {
-      (*Head)->nextNode->prevNode = NULL;
+    if (*Head == Remove) { // 삭제하려는 노드가 첫번째 노드인 경우
+        *Head = Remove->nextNode;
+        if (*Head != NULL) {
+            (*Head)->prevNode = NULL;
+        }
+    } else if (Remove->nextNode == NULL) { // 삭제하려는 노드가 마지막 노드인 경우
+        Remove->prevNode->nextNode = NULL;
+    } else { // 삭제하려는 노드가 일반적인 경우(앞, 뒤 노드 모두 존재)
+        Remove->prevNode->nextNode = Remove->nextNode;
+        Remove->nextNode->prevNode = Remove->prevNode;
     }
-  } else {
-    if (Remove->nextNode !=
-        NULL) { // 삭제하려는 노드 앞,뒤의 노두가 모두 존재하는 경우
-      Remove->prevNode->nextNode = Remove->nextNode;
-      Remove->nextNode->prevNode = Remove->prevNode;
-    } else { // 삭제하려는 노드가 마지막 노드인 경우
-      Remove->prevNode->nextNode = NULL;
-    }
-  }
-
-  Remove->prevNode = NULL;
-  Remove->nextNode = NULL;
 }
 
 void DLL_RemoveNodeAns(Node **Head, Node *Remove) {
