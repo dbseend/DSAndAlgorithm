@@ -6,19 +6,20 @@
 
 typedef enum {
   LEFT_PARENTHESIS = '(',
-  RIGHT_PARANTHESIS = ')',
+  RIGHT_PARENTHESIS = ')',
   PLUS = '+',
   MINUS = '-',
   MULTIPLY = '*',
-  DVIDE = '/',
+  DIVIDE = '/',
   SPACE = ' ',
   OPERAND
 } SYMBOL;
 
 int IsNumber(char Cipher);
 unsigned int GetNextToken(char *Expression, char *Token, int *TYPE);
+int GetPriority(char Operator, int InsStack);
 int IsPrior(char Operator1, char Operator2);
-void GetPostFix(char *InfixExpression, char *PostfixExpression);
+void GetPostfix(char *InfixExpression, char *PostfixExpression);
 double Calculate(char *PostfixExpression);
 
 #endif
