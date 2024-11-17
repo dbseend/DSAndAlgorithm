@@ -41,3 +41,7 @@ int AS_IsEmpty(ArrayStack *Stack){
 	return (Stack->Top == -1);
 }
 
+int AS_IsFull(ArrayStack* Stack){
+	return (Stack->Top+1 == Stack->Capacity);
+}
+

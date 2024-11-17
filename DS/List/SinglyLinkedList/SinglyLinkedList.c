@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "SinglyLinkedList.h"
 #include <time.h>
 
 // 노드 생성 연산
