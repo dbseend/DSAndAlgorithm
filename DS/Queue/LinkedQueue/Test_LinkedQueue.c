@@ -1,7 +1,8 @@
 #include "LinkedQueue.h"
+#include <stdio.h>
 
 int main(void) {
-  Node *Popped;
+  Node *front;
   LinkedQueue *Queue;
 
   LQ_CreateQueue(&Queue);
@@ -13,12 +14,13 @@ int main(void) {
 
   printf("Queue Size : %d\n", Queue->count);
 
-  while (LQ_IsEmpty(Queue) == 0) {
-    Popped = LQ_Dequeue(Queue);
+  while (!LQ_IsEmpty(Queue)) {
 
-    printf("Dequeue: %s \n", Popped->data);
+    front = LQ_Dequeue(Queue);
 
-    LQ_DestroyNode(Popped);
+    printf("Dequeue: %s \n", front->data);
+
+    LQ_DestroyNode(front);
   }
 
   LQ_DestroyQueue(Queue);
