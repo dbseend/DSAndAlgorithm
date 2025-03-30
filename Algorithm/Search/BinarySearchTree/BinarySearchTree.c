@@ -29,8 +29,8 @@ BSTNode* BST_SearchNode( BSTNode* Tree, ElementType Target ){
     }
 
     if(Tree->Data == Target) return Tree;
-    else if(Tree->Data < Target) return BST_SearchNode(Tree->Left, Target);
-    else return BST_SearchNode(Tree->Right, Target);
+    else if(Tree->Data < Target) return BST_SearchNode(Tree->Right, Target);
+    else return BST_SearchNode(Tree->Left, Target);
 }
 
 BSTNode* BST_SearchMinNode( BSTNode* Tree ){
@@ -63,19 +63,22 @@ BSTNode* BST_RemoveNode( BSTNode* Tree,BSTNode* Parent, ElementType Target ){
 
     if(Tree == NULL) return NULL;
 
-    if(Tree->Data < Target) Removed = BST_RemoveNode(Tree->Left, Tree, Target);
-    if(Tree->Data > Target) Removed = BST_RemoveNode(Tree->Right, Tree, Target);
+    if(Tree->Data < Target) Removed = BST_RemoveNode(Tree->Right, Tree, Target);
+    else if(Tree->Data > Target) Removed = BST_RemoveNode(Tree->Left, Tree, Target);
     else{
         Removed = Tree;
 
+        // Case1) 제거할 노드의 자식이 0개인 경우
         if(Tree->Left == NULL && Tree->Right == NULL){
             if(Parent->Left == Tree) Parent->Left = NULL;
             else Parent->Right = NULL; 
         } else{
+            // Case2) 제거할 노드의 자식이 2개인 경우
             if(Tree->Left != NULL && Tree->Right != NULL){
                 BSTNode* Min = BST_SearchMinNode(Removed);
                 Min = BST_RemoveNode(Tree, NULL, Min->Data);
                 Tree->Data = Min->Data;
+            // Case1) 제거할 노드의 자식이 1개인 경우
             } else {
                 BSTNode* Temp = NULL;
                 if(Tree->Left != NULL) Temp = Tree->Left;

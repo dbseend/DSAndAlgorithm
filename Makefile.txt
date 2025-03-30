@@ -1,0 +1,53 @@
+[Makefile이란?] 
+소스 코드의 컴파일 및 빌드 과정을 자동화해주는 파일
+=> 파일 의존성을 관리하고 변경된 파일만 다시 빌드해 빌드 속도를 높여준다.
+
+[Makefile의 기본 구조]
+타겟: 의존성
+    명령어
+타겟(Target): 생성할 파일(예: 실행 파일, 오브젝트 파일 등)
+의존성(Dependecy): 타겟을 만들기 위해 필요한 파일
+명령어(Command): 의존성이 변경되었을 때 실행할 명령(반드시 탭(Tap)으로 시작해야 함)
+
+[Makefile 예제1: 간단한 빌드 자동화]
+main.c fun.c 컴파일 -> program 실행 파일 생성
+# 컴파일러 설정
+CC = gcc
+CFLAGS = -Wall -g
+
+# 타겟 정의
+program: main.o func.o
+    $(CC) $(CFLAGS) -o program main.o func.o // gcc -Wall -g -o program main.o func.o
+
+# 개별 파일 컴파일 규칙
+main.o: main.c
+    $(CC) $(CFLAGS) -c main.c // gcc -Wall -g -c main.c
+
+func.o: func.c
+    $(CC) $(CFLAGS) -c func.c // gcc -Wall -g -c fun.c
+
+# clean 명령어 추가 (빌드 파일 삭제)
+clean:
+    rm -f program *.o
+
+[Makefile 예제2: 자동화된 의존성 관리]
+파일이 많을 경우 -> 자동 의존성 관리 필요 => wildcard를 이용하여 .c 파일을 자동으로 찾아 빌드
+CC = gcc
+CFLAGS = -Wall -g
+SRCS = $(wildcard *.c)  # 현재 폴더의 모든 .c 파일 가져오기
+OBJS = $(SRCS:.c=.o)    # .c를 .o로 변경하여 오브젝트 파일 목록 생성
+
+program: $(OBJS)
+    $(CC) $(CFLAGS) -o program $(OBJS)
+
+%.o: %.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+    rm -f program *.o
+
+$(wildcard *.c): 현재 디렉토리의 모든 .c 파일을 리스트로 가져옴
+$(SRCS:.c=.o): .c 확장자를 .o로 변환하여 오브젝트 파일 목록 생성
+%.o: %.c: 모든 .c 파일을 대응하는 .o 파일로 변환 ($<는 현재 파일)
+
+

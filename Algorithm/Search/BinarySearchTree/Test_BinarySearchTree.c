@@ -11,6 +11,7 @@ void PrintSearchResult(int SearchTarget, BSTNode* Result)
 
 int main( void )
 {    
+    int SearchTarget = 0;
     //  노드 생성 
     BSTNode* Tree = BST_CreateNode(123);
     BSTNode* Node = NULL;
@@ -29,12 +30,13 @@ int main( void )
     BST_InsertNode( Tree, BST_CreateNode(317) );
     BST_InsertNode( Tree, BST_CreateNode(1) );
     
-    int SearchTarget = 17;
-	Node =  BST_SearchNode(Tree, SearchTarget );
+    // 특정 노드 검색
+    SearchTarget = 17;
+	Node = BST_SearchNode(Tree, SearchTarget );
     PrintSearchResult(SearchTarget, Node);
 
     SearchTarget = 117;
-    Node =  BST_SearchNode(Tree, SearchTarget );
+    Node = BST_SearchNode(Tree, SearchTarget );
     PrintSearchResult(SearchTarget, Node);
 
     //  트리 출력 
