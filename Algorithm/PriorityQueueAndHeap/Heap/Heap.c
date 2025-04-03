@@ -49,7 +49,9 @@ void HEAP_Insert(  Heap* H, ElementType NewData ){
 2-2. 옮겨온 노드가 리프 노드가 되거나 양쪽 자식보다 작은 값을 갖는 경우 종료
 */
 void HEAP_DeleteMin( Heap* H, HeapNode* Root ){
-    HEAP_SwapNodes(H, 0, H->UsedSize);
+
+    HEAP_SwapNodes(H, 0, H->UsedSize-1);
+    H->UsedSize--;
 
     int parentIdx = 0;
     int leftChildIdx = HEAP_GetLeftChild(0);
@@ -71,9 +73,7 @@ void HEAP_DeleteMin( Heap* H, HeapNode* Root ){
         parentIdx = swapChildIdx;
         leftChildIdx = HEAP_GetLeftChild(parentIdx);
         rightChildIdx = leftChildIdx+1;
-    }
-    
-    H->UsedSize--;
+    }    
 }
 
 int HEAP_GetParent( int Index ){
