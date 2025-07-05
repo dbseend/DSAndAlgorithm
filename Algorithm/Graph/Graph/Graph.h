@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-enum VisitMode { Visited, NotVisited };
+enum VisitMode { Visited = 1, NotVisited = 0 };
 
 typedef int VElemntType;
 

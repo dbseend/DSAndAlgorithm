@@ -6,11 +6,11 @@ int main( void )
     Graph* G = createGraph();
     
     //  정점 생성 
-    Vertex* V1 = createGraph( '1' );
-    Vertex* V2 = createGraph( '2' );
-    Vertex* V3 = createGraph( '3' );
-    Vertex* V4 = createGraph( '4' );
-    Vertex* V5 = createGraph( '5' );
+    Vertex* V1 = createVertex( 1 );
+    Vertex* V2 = createVertex( 2 );
+    Vertex* V3 = createVertex( 3 );
+    Vertex* V4 = createVertex( 4 );
+    Vertex* V5 = createVertex( 5 );
 
     //  그래프에 정점을 추가 
     addVertex( G, V1 );
